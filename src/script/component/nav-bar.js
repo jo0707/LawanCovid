@@ -5,7 +5,8 @@ class NavBar extends HTMLElement {
     }
 
     render() {
-        this.innerHTML  = `<h1>Lawan Covid</h1>`;
+        this.innerHTML  = `<h1>Lawan Covid</h1>
+                            <h4>Status kasus Covid</h4>`;
     }
 
 }

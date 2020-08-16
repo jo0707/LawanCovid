@@ -6,9 +6,16 @@ class MainStatsList extends HTMLElement {
         super();
 
         this.titles = ["Sembuh", "Terinfeksi", "Meninggal"];
+
+        this.colors = ["#B9F6CA","#FFF9C4","#FFCCBC"];
+
         this.images = ["./assets/recovered.png",
                         "./assets/infected.png",
                         "./assets/dead.png"];
+
+        this.altText= ["Emotikon Sembuh",
+                        "Emotikon sedih",
+                        "Emotikon XoX"]
     }
     
     set data(data) {
@@ -17,6 +24,8 @@ class MainStatsList extends HTMLElement {
             data.infected,
             data.deaths
         ];
+
+        this.render();
     }
 
     connectedCallback() {
@@ -25,13 +34,18 @@ class MainStatsList extends HTMLElement {
 
     render() {
         this.innerHTML = "";
-        this._peopleDataCounts.forEach( (peopleCount, i) => {
+
+        this._peopleDataCounts.forEach((peopleCount, i) => {
             const dataItemElement = document.createElement("main-stats-item");
+
             dataItemElement.peopleDataSet   = {peopleCount: peopleCount, 
-                                                title: this.titles[i], 
-                                                image: this.images[i]};
+                                                title:      this.titles[i], 
+                                                image:      this.images[i],
+                                                altText:    this.altText[i],
+                                                color:      this.colors[i]};
+
             this.appendChild(dataItemElement);
-        })
+        });
     }
 }
 

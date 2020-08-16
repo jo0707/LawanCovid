@@ -2,36 +2,42 @@ import './main-stats-list.js';
 
 class MainStatus extends HTMLElement {
 
+    connectedCallback() {
+        this.render();
+    }
+
     set data(data) {
         this._data  = data;
-        this._title = data.title;
 
         this.render();
     }
 
-    connectedCallback() {
-    }
-
     render() {
-        let titleTemplate = "";
-        if (this._title)
-            titleTemplate   = this._title;
-        else
-            titleTemplate   = `status Covid hingga hari ini`;
+        if (this._data == undefined || this._data == null) {
+            this.renderError("Memuat...");
+            return;
+        }
 
-        this.innerHTML  = `<div class="status card" id="innerStats">
-        <h2>${titleTemplate}</h2>
-        </div>`;
+        let titleTemplate = () => {
+            if (this._data.title)
+                return this._data.title;
+            else
+                return "Jumlah Kasus Hingga Saat Ini";
+        }
+
+        this.innerHTML  = `<div class="status card">
+            <h2>${titleTemplate()}</h2>
+            </div>`;
         
         const dataListElement   = document.createElement("main-stats-list");
         dataListElement.data    = this._data;
-        this.querySelector("#innerStats").appendChild(dataListElement);
+        this.firstChild.appendChild(dataListElement);
     }
 
     renderError(message) {
-        this.innerHTML  = `<div class="status card" id="innerStats">
-        <h2>${message}</h2>
-        </div>`;
+        this.innerHTML  = `<div class="status card">
+            <h5>${message}</h5>
+            </div>`;
     }
 
 }

@@ -1,16 +1,15 @@
-import '../component/main-status/main-status.js';
-import '../component/search-bar.js';
-import '../component/countries/country-list.js';
 import DataSource from '../data/data-source.js';
+import '../component/main-status/main-status.js';
+import '../component/countries/country-list.js';
+import '../component/search-bar.js';
 
-const defaultCountry    = "Indonesia";
-
-const dailyStatus   = document.getElementById("dailyStatus");
-const countryStatus = document.getElementById("countryStatus");
-const searchElement = document.querySelector("search-bar");
+const defaultCountry        = "Indonesia";
+const dailyStatus           = document.getElementById("dailyStatus");
+const countryStatus         = document.getElementById("countryStatus");
+const searchElement         = document.querySelector("search-bar");
 const countryListElement    = document.querySelector("#countryListContainer"); 
 
-const main = () => {
+const main  = () => {
     const onButtonSearchClicked = () => {
         let keyword = searchElement.value;
         countryListElement.search(keyword);
@@ -27,6 +26,7 @@ const main = () => {
 const getApiData = async(countryName) => {
     try {
         let resultData      = await DataSource.getApiData(countryName);
+
         if (countryName == null)
             dailyStatus.data    = resultData;
         else 

@@ -5,22 +5,22 @@ class CountryItem extends HTMLElement {
     connectedCallback() {
         this.render();
     }
+    
+    get countryName() {
+        return this._countryName;
+    }
 
     set countryName(countryName) {
         this._countryName   = countryName;
         this.render();
     }
 
-    get countryName() {
-        return this._countryName;
-    }
-
     render() {
-        this.innerHTML = `<li>${this._countryName}</li>`;
+        this.innerHTML = `<p>${this._countryName}</p>`;
+
         this.addEventListener("click", () => {
             getApiData(this._countryName);
-            document.getElementById("countryStatus")
-            .scrollIntoView({behavior: "smooth"});
+            document.getElementById("countryStatus").scrollIntoView({behavior: "smooth"});
         });
     }
 }
