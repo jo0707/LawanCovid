@@ -1,58 +1,53 @@
 class DataSource {
+  static getApiData(countryName) {
+    let url = "https://covid19.mathdro.id/api";
 
-    static getApiData(countryName) {
-        let url = "https://covid19.mathdro.id/api";
+    if (countryName != null) url += `/countries/${countryName}`;
 
-        if (countryName != null)
-            url += `/countries/${countryName}`;
+    return fetch(url)
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseJson) => {
+        if (responseJson.error && countryName != null)
+          return Promise.reject(`Negara ${countryName} tidak ditemukan`);
+        else if (responseJson.error && countryName == null)
+          return Promise.reject(`Terjadi kesalahan...`);
 
-        return fetch(url)
-        .then(response => {
-            return response.json();
-        })
-        .then(responseJson => {
-            if (responseJson.error && countryName != null)
-                return Promise.reject(`Negara ${countryName} tidak ditemukan`);
+        const data = {
+          recovered: responseJson.recovered.value,
+          infected: responseJson.confirmed.value,
+          deaths: responseJson.deaths.value,
+          title: countryName,
+        };
 
-            else if (responseJson.error && countryName == null)
-                return Promise.reject(`Terjadi kesalahan...`);
+        return Promise.resolve(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-            const data  = {
-                recovered: responseJson.recovered.value,
-                infected: responseJson.confirmed.value,
-                deaths: responseJson.deaths.value,
-                title: countryName
-            };
+  static getApiCountryList() {
+    return fetch("https://covid19.mathdro.id/api/countries")
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseJson) => {
+        if (responseJson.error) return Promise.reject("Gagal Memuat data");
 
-            return Promise.resolve(data);
-        })
-        .catch(error => {
-            console.log(error);
+        const countryList = [];
+
+        responseJson.countries.forEach((countryData) => {
+          countryList.push(countryData.name);
         });
-    }
 
-    static getApiCountryList() {
-        return fetch("https://covid19.mathdro.id/api/countries")
-        .then(response => {
-            return response.json();
-        })
-        .then(responseJson => {
-            if (responseJson.error)
-                return Promise.reject("Gagal Memuat data");
-
-            const countryList   = [];
-            
-            responseJson.countries.forEach(countryData => {
-                countryList.push(countryData.name);
-            });
-            
-            return Promise.resolve(countryList);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
+        return Promise.resolve(countryList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 export default DataSource;
