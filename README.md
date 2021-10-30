@@ -24,6 +24,8 @@ Created for submission to the class ["Learning Fundamentals of Front-End Web Dev
 
 This project is published only as a reference for friends, especially those who are studying at Dicoding. Do not plagiarize this project because there is no knowledge gained.  
 
-## Authors
+0 recovered due to API error.
 
+## Credit
 - [@jo0707](github.com/jo0707)
+- API : https://covid19.mathdro.id/api
