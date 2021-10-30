@@ -2,6 +2,7 @@
 
 ![Lawan Covid](https://raw.githubusercontent.com/jo0707/LawanCovid/master/lawancovid.png)  
 ## Details
+LawanCovid is a website that show some information about covid data.
 
 A website built by applying the concepts of AJAX, Webpack, and custom elements (JavaScript).
 
